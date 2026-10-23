@@ -7,3 +7,4 @@ export * from "./account-descriptor";
 export * from "./account-data";
 export * from "./app-config";
 export * from "./account-name";
+export * from "./mock-accounts";

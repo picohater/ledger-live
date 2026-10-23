@@ -39,6 +39,7 @@ jest.mock("@devtools/bindings", () => ({
   useAccountBalanceToolProps: () => ({ marker: "account-balance-props" }),
   useAccountDataToolProps: () => ({ marker: "account-data-props" }),
   useAccountNameToolProps: () => ({ marker: "account-name-props" }),
+  useMockAccountsToolProps: () => ({ marker: "mock-accounts-props" }),
   createAccountDataRecorder: () => ({
     instrument: (sources: unknown) => sources,
     middleware: () => (next: (action: unknown) => unknown) => next,
@@ -87,6 +88,7 @@ describe("DevToolsScreen", () => {
           { id: "account-descriptor", config: { marker: "account-descriptor-props" } },
           { id: "account-balance", config: { marker: "account-balance-props" } },
           { id: "account-name", config: { marker: "account-name-props" } },
+          { id: "mock-accounts", config: { marker: "mock-accounts-props" } },
         ],
       }),
     );
