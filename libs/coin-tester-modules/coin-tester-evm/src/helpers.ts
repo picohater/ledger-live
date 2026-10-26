@@ -20,7 +20,6 @@ export const core = getCryptoCurrencyById("core");
 export const sonic = getCryptoCurrencyById("sonic");
 export const polygon = getCryptoCurrencyById("polygon");
 export const scroll = getCryptoCurrencyById("scroll");
-export const blast = getCryptoCurrencyById("blast");
 export const bnb = getCryptoCurrencyById("bsc");
 export const base = getCryptoCurrencyById("base");
 export const arcTestnet = getCryptoCurrencyById("arc_testnet");

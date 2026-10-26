@@ -5,7 +5,6 @@ import { killAnvil } from "./anvil";
 import { scenarioEthereum } from "./scenarii/ethereum";
 import { scenarioPolygon } from "./scenarii/polygon";
 import { scenarioScroll } from "./scenarii/scroll";
-import { scenarioBlast } from "./scenarii/blast";
 import { scenarioBase } from "./scenarii/base";
 import { scenarioSonic } from "./scenarii/sonic";
 import { scenarioCore } from "./scenarii/core";
@@ -37,7 +36,6 @@ describe("EVM Deterministic Tester", () => {
   it("scenario Polygon", () => safeExecuteScenario(scenarioPolygon));
   it("scenario Core", () => safeExecuteScenario(scenarioCore));
   it("scenario Scroll", () => safeExecuteScenario(scenarioScroll));
-  it("scenario Blast", () => safeExecuteScenario(scenarioBlast));
   it("scenario Base", () => safeExecuteScenario(scenarioBase));
   it("scenario BNB (BSC)", () => safeExecuteScenario(scenarioBnb));
   it("scenario Arc Testnet", () => safeExecuteScenario(scenarioArcTestnetNative));

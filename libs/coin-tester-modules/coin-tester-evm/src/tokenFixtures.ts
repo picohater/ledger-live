@@ -6,7 +6,6 @@ import type { TokenCurrency } from "@ledgerhq/ledger-wallet-framework/types";
 const ethereum = getCryptoCurrencyById("ethereum");
 const polygon = getCryptoCurrencyById("polygon");
 const scroll = getCryptoCurrencyById("scroll");
-const blast = getCryptoCurrencyById("blast");
 const bnb = getCryptoCurrencyById("bsc");
 const sonic = getCryptoCurrencyById("sonic");
 const core = getCryptoCurrencyById("core");
@@ -61,19 +60,6 @@ export const USDT_ON_BNB: TokenCurrency = {
   delisted: false,
   disableCountervalue: false,
   units: [{ name: "USDT", code: "USDT", magnitude: 18 }],
-} as TokenCurrency;
-
-export const MIM_ON_BLAST: TokenCurrency = {
-  type: "TokenCurrency",
-  id: "blast/erc20/magic_internet_money",
-  contractAddress: "0x76DA31D7C9CbEAE102aff34D3398bC450c8374c1",
-  parentCurrencyId: blast.id,
-  tokenType: "erc20",
-  name: "Magic Internet Money",
-  ticker: "MIM",
-  delisted: false,
-  disableCountervalue: false,
-  units: [{ name: "MIM", code: "MIM", magnitude: 18 }],
 } as TokenCurrency;
 
 export const BRIDGED_USDC_ON_SONIC: TokenCurrency = {
