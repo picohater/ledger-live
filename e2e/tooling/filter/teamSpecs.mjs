@@ -41,8 +41,8 @@ const IMPORT_ALIASES = [
 // Helpers that pick the owner at collection time from the currency. A spec that reaches one can
 // belong to any team it returns, so it is attributed to ALL of them: a team filter must
 // over-select a shared spec, never silently drop it.
-// Keep in sync with libs/live-e2e-shared/src/data/delegateTeamOwner.ts.
-const TEAM_OWNER_HELPERS = new Map([["delegateTeamOwner", ["BST", "COIN_INTEGRATION"]]]);
+// Keep in sync with libs/live-e2e-shared/src/data/coinTeamOwner.ts.
+const TEAM_OWNER_HELPERS = new Map([["coinTeamOwner", ["BST", "COIN_INTEGRATION"]]]);
 
 const MAX_IMPORT_DEPTH = 3;
 

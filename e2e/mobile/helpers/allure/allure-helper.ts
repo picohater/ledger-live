@@ -1,9 +1,16 @@
-import { allure } from "jest-allure2-reporter/api";
+import { $SubSuite, $Suite, allure } from "jest-allure2-reporter/api";
 import { Team } from "@ledgerhq/live-e2e-shared/enum/Team";
+import { SendScenario, TestFolder } from "@ledgerhq/live-e2e-shared/enum/TestFolder";
 
-export function setTeamOwner(team: Team): void {
+export function setTeamOwner(team: Team, folder?: TestFolder, scenario?: SendScenario): void {
   $Owner(team);
   $ParentSuite(team);
+  if (folder && scenario) {
+    $Suite(folder);
+    $SubSuite(scenario);
+  } else if (folder) {
+    $SubSuite(folder);
+  }
 }
 
 // Allure 3 never renders `description` when jest-allure2-reporter also writes an empty
