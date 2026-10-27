@@ -7,12 +7,15 @@ import {
   ListItemTrailing,
   Tag,
 } from "@ledgerhq/lumen-ui-react";
+import type { ToolKind } from "@devtools/registry";
 import type { MouseEventHandler, ReactNode } from "react";
+import { KindTag } from "../KindTag/KindTag";
 
 type ToolRowProps = Readonly<{
   title: string;
   description?: string;
   owner?: string;
+  kind?: ToolKind;
   trailing?: ReactNode;
   onClick?: MouseEventHandler<HTMLDivElement>;
   isActive?: boolean;
@@ -25,6 +28,7 @@ export function ToolRow({
   title,
   description,
   owner,
+  kind,
   trailing,
   onClick,
   isActive,
@@ -37,7 +41,7 @@ export function ToolRow({
         onClick={disabled ? undefined : onClick}
         aria-current={isActive ? "page" : undefined}
         aria-disabled={disabled}
-        className={`rounded-md ${isActive ? "bg-active/10" : ""} ${disabled ? "opacity-50 pointer-events-none" : ""}`}
+        className={`h-auto min-h-40 py-8 rounded-md ${isActive ? "bg-active/10" : ""} ${disabled ? "opacity-50 pointer-events-none" : ""}`}
       >
         {isActive && (
           <ListItemLeading className="absolute left-2 top-2 bottom-2" aria-hidden="true">
@@ -45,15 +49,18 @@ export function ToolRow({
           </ListItemLeading>
         )}
         <ListItemContent>
-          <ListItemTitle>{title}</ListItemTitle>
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+            <ListItemTitle className="max-w-full shrink-0">{title}</ListItemTitle>
+            {(kind || owner) && (
+              <div className="ml-auto flex items-center gap-4">
+                {kind && <KindTag kind={kind} />}
+                {owner && <Tag label={owner} appearance="gray" size="sm" />}
+              </div>
+            )}
+          </div>
           {description && <ListItemDescription>{description}</ListItemDescription>}
         </ListItemContent>
-        {(owner || trailing) && (
-          <ListItemTrailing>
-            {owner && <Tag label={owner} appearance="gray" size="sm" />}
-            {trailing}
-          </ListItemTrailing>
-        )}
+        {trailing && <ListItemTrailing>{trailing}</ListItemTrailing>}
       </ListItem>
     </div>
   );

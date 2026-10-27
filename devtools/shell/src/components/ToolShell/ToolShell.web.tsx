@@ -1,6 +1,7 @@
 import { Tag } from "@ledgerhq/lumen-ui-react";
 import type { Tool } from "@devtools/registry";
 import { useToolProps } from "../../context";
+import { KindTag } from "../KindTag/KindTag";
 
 interface ToolShellProps {
   tool: Tool;
@@ -21,7 +22,10 @@ export function ToolShell({ tool, onBack }: ToolShellProps) {
           >
             {tool.category} / {tool.id}
           </button>
-          <h1 className="heading-1">{tool.label}</h1>
+          <div className="flex items-center gap-12">
+            <h1 className="heading-1">{tool.label}</h1>
+            {tool.kind && <KindTag kind={tool.kind} />}
+          </div>
           {tool.desc && <p className="body-2 text-muted">{tool.desc}</p>}
         </div>
         {tool.owner && <Tag label={tool.owner} appearance="gray" size="sm" className="shrink-0" />}
