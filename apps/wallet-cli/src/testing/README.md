@@ -16,6 +16,7 @@ binary.
 | `authenticated-quote-server` | Both of the above behind one server, with a helper that runs `swap quote` and returns its signed challenge |
 | `human-device-error-exit` | Standalone script spawned to assert human-output exit codes |
 | `os-keychain` | A failing Linux Secret Service probe, and a `process.platform` override |
+| `skill-fixtures` | Reads an installed skill's files and rewrites its sidecar, e.g. as an older wallet-cli would have |
 
 ## CLI tests
 
