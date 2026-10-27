@@ -11,6 +11,7 @@ import type { Contact } from "@domain/entity-contact";
 import type { MessageData, OverrideFeatureFlagPayload, ServerData } from "~/e2e/bridge/types";
 import type { PartialFeatures, FeatureId } from "@shared/feature-flags";
 import { FeatureIdSchema } from "@shared/feature-flags";
+import type { LiveAppManifest } from "@ledgerhq/live-common/platform/types";
 import { log as detoxLog } from "detox";
 import { getSpeculosModel } from "@ledgerhq/live-e2e-shared/speculosAppVersion";
 import { v4 as uuid } from "uuid";
@@ -185,6 +186,10 @@ export function setFeatureFlag(flag: OverrideFeatureFlagPayload) {
 
 export async function importContacts(contacts: Contact[]) {
   await fetchData({ type: "importContacts", id: uniqueId(), payload: contacts });
+}
+
+export function importLocalManifests(manifests: LiveAppManifest[]) {
+  postMessage({ type: "importLocalManifests", id: uniqueId(), payload: manifests });
 }
 
 async function navigate(name: string) {
