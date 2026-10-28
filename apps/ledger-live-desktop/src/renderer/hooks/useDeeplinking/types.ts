@@ -58,6 +58,8 @@ export interface DeeplinkHandlerContext {
   isGenericAwarenessModalEnabled: boolean;
   /** `lwdPayTab` — deeplink navigates to `/paytab` only when this flag is enabled; otherwise falls back to the default handler. */
   isPayTabEnabled: boolean;
+  /** Predictions manifest found, or true until the live app catalog loads so a cold-start deeplink is not dropped. */
+  isPredictionsAvailable: boolean;
 }
 
 export interface ParsedDeeplink {
@@ -221,6 +223,11 @@ export interface PerpsRoute {
   type: "perps";
 }
 
+export interface PredictionsRoute {
+  type: "predictions";
+  query: Record<string, string>;
+}
+
 export interface PayTabRoute {
   type: "paytab";
   /**
@@ -279,6 +286,7 @@ export type DeeplinkRoute =
   | RecoverRoute
   | RecoverRestoreFlowRoute
   | PerpsRoute
+  | PredictionsRoute
   | PayTabRoute
   | PostOnboardingRoute
   | LedgerSyncRoute

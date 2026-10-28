@@ -20,5 +20,6 @@ export const createMockContext = (
   isProductTourEnabled: true,
   isGenericAwarenessModalEnabled: true,
   isPayTabEnabled: false,
+  isPredictionsAvailable: true,
   ...overrides,
 });
