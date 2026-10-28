@@ -64,6 +64,7 @@ export function useDeviceOnboardingFunnelViewModel(): DeviceOnboardingFunnelMode
     },
   });
   const started = useRef(false);
+  const keptChecksScreen = useRef<ChecksScreenProps | null>(null);
 
   useEffect(() => {
     if (started.current) return;
@@ -150,6 +151,10 @@ export function useDeviceOnboardingFunnelViewModel(): DeviceOnboardingFunnelMode
   );
   const device = onboarding.liveDevice;
   const closeLabel = t("deviceOnboarding.checks.close");
+  const leavingAfterChecks =
+    onboarding.status === "exited" ||
+    onboarding.state === "syncOffer" ||
+    onboarding.state === "done";
 
   if (onboarding.state === awaitingSessionAfterFirmwareUpdateState) {
     if (onboarding.error) {
@@ -192,6 +197,9 @@ export function useDeviceOnboardingFunnelViewModel(): DeviceOnboardingFunnelMode
         onQuit: quitOrLeave,
       };
     }
+    if (leavingAfterChecks && keptChecksScreen.current) {
+      return { status: "checks", checks: keptChecksScreen.current };
+    }
     return {
       status: "connecting",
       title: t("deviceOnboarding.connection.connecting"),
@@ -200,30 +208,25 @@ export function useDeviceOnboardingFunnelViewModel(): DeviceOnboardingFunnelMode
     };
   }
 
-  return {
-    status: "checks",
-    checks: {
-      device,
-      state: screenState,
-      error: toChecksError(onboarding.state, readString(onboarding.context?.genuineFailureKind)),
-      update: toFirmwareUpdate(
-        readString(onboarding.context?.firmwareVersion),
-        readString(onboarding.context?.availableFirmwareVersion),
-      ),
-      onStart: () =>
-        send({ type: onboarding.state === "checks.checksIdle" ? "RETRY" : "CONTINUE" }),
-      onRetry: () => send({ type: "RETRY" }),
-      onCloseSheet: () => send({ type: "CLOSE" }),
-      onAcceptUpdate: () => send({ type: "USER_ACCEPT" }),
-      onDeclineUpdate: () => send({ type: "USER_DECLINE" }),
-      onContinue:
-        onboarding.state === "checks.checksSucceeded"
-          ? () => send({ type: "CONTINUE" })
-          : undefined,
-      onQuit:
-        onboarding.state === firmwareUpdateDelegatedState ? closeFirmwareHandover : quitMachine,
-    },
+  const checks: ChecksScreenProps = {
+    device,
+    state: screenState,
+    error: toChecksError(onboarding.state, readString(onboarding.context?.genuineFailureKind)),
+    update: toFirmwareUpdate(
+      readString(onboarding.context?.firmwareVersion),
+      readString(onboarding.context?.availableFirmwareVersion),
+    ),
+    onStart: () => send({ type: onboarding.state === "checks.checksIdle" ? "RETRY" : "CONTINUE" }),
+    onRetry: () => send({ type: "RETRY" }),
+    onCloseSheet: () => send({ type: "CLOSE" }),
+    onAcceptUpdate: () => send({ type: "USER_ACCEPT" }),
+    onDeclineUpdate: () => send({ type: "USER_DECLINE" }),
+    onContinue:
+      onboarding.state === "checks.checksSucceeded" ? () => send({ type: "CONTINUE" }) : undefined,
+    onQuit: onboarding.state === firmwareUpdateDelegatedState ? closeFirmwareHandover : quitMachine,
   };
+  keptChecksScreen.current = checks;
+  return { status: "checks", checks };
 }
 
 function matchesPairedDevice(knownId: string, pairedDeviceId: string | undefined) {
