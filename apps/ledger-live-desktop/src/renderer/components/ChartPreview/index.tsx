@@ -43,9 +43,10 @@ export type Props = {
   height: number;
   color?: string;
   valueKey?: "value" | "countervalue";
+  suggestedMin?: number;
 };
 
-export default function Chart({ height, data, color, valueKey = "value" }: Props) {
+export default function Chart({ height, data, color, valueKey = "value", suggestedMin }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const chartRef = useRef<ChartJs | null>(null);
   const { colors } = useTheme();
@@ -113,13 +114,14 @@ export default function Chart({ height, data, color, valueKey = "value" }: Props
               zeroLineColor: colors.neutral.c30,
             },
             ticks: {
-              beginAtZero: true,
+              beginAtZero: suggestedMin === undefined,
+              suggestedMin,
             },
           },
         ],
       },
     }),
-    [colors.neutral.c30, colors.neutral.c70],
+    [colors.neutral.c30, colors.neutral.c70, suggestedMin],
   );
 
   useLayoutEffect(() => {

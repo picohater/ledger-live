@@ -9,6 +9,7 @@ import CounterValue from "~/renderer/components/CounterValue";
 import Chart from "~/renderer/components/ChartPreview";
 import useTheme from "~/renderer/hooks/useTheme";
 import { Data } from "~/renderer/components/Chart/types";
+import { getSuggestedMin } from "~/renderer/components/Chart/getSuggestedMin";
 
 type Props = {
   account: AccountLike;
@@ -23,6 +24,7 @@ function Body({ account, range }: Props) {
   const bgColor = useTheme().colors.background.card;
   const currency = getAccountCurrency(account);
   const color = useCurrencyColor(currency, bgColor);
+  const valueKey = countervalueAvailable ? "countervalue" : "value";
   return (
     <Box flow={4}>
       <Box flow={2} horizontal>
@@ -52,7 +54,8 @@ function Body({ account, range }: Props) {
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         data={history as Data}
         color={color}
-        valueKey={countervalueAvailable ? "countervalue" : "value"}
+        valueKey={valueKey}
+        suggestedMin={getSuggestedMin(history as Data, valueKey)}
         height={52}
       />
     </Box>

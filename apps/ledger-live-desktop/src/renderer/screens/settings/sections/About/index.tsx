@@ -24,9 +24,7 @@ const SectionHelp = () => {
   const [clickCounter, setClickCounter] = useState(0);
 
   const onVersionClick = useCallback(() => {
-    if (clickCounter < 10) {
-      setClickCounter(counter => counter + 1);
-    }
+    setClickCounter(counter => counter + 1);
   }, [clickCounter]);
   useEffect(() => {
     if (clickCounter === 10 && !devMode) {
@@ -38,6 +36,10 @@ const SectionHelp = () => {
         text: t("settings.developer.toast.text"),
         icon: "info",
       });
+    }
+    if (clickCounter === 20 && devMode) {
+      dispatch(setDeveloperMode(false));
+      setClickCounter(0);
     }
   }, [clickCounter, devMode, pushToast, t, dispatch]);
   return (

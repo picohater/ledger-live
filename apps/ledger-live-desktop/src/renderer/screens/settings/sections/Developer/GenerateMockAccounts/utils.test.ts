@@ -1,4 +1,4 @@
-import type { Account } from "@ledgerhq/types-live";
+import type { Account, Operation } from "@ledgerhq/types-live";
 import { getCryptoCurrencyById } from "@domain/entity-currency-crypto";
 import { genAccount } from "@ledgerhq/live-common/mock/account";
 import { getOperationAmountNumber } from "@ledgerhq/ledger-wallet-framework/operation";
@@ -74,7 +74,7 @@ describe("addMockOperationsToAllAccounts", () => {
     // Balance and history follow the operations: an account whose stored balance was stale
     // (an earlier sync zeroed it) must not keep a zero balance next to a full history.
     const fromOperations = persistedDevice.operations.reduce(
-      (total: BigNumber, op) => total.plus(getOperationAmountNumber(op)),
+      (total: BigNumber, op: Operation) => total.plus(getOperationAmountNumber(op)),
       new BigNumber(0),
     );
     expect(persistedDevice.balance.isEqualTo(fromOperations)).toBe(true);

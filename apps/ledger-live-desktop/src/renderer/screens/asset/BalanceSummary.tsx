@@ -13,6 +13,7 @@ import { useCurrencyPortfolio, usePortfolio } from "~/renderer/actions/portfolio
 import AssetBalanceSummaryHeader from "./AssetBalanceSummaryHeader";
 import { discreetModeSelector } from "~/renderer/reducers/settings";
 import { Data } from "~/renderer/components/Chart/types";
+import { getSuggestedMin } from "~/renderer/components/Chart/getSuggestedMin";
 import { AccountLike, PortfolioRange } from "@ledgerhq/types-live";
 import PlaceholderChart from "~/renderer/components/PlaceholderChart";
 import Alert from "~/renderer/components/Alert";
@@ -125,6 +126,10 @@ export default function BalanceSummary({
             height={200}
             tickXScale={range}
             valueKey={displayCountervalue ? "countervalue" : "value"}
+            suggestedMin={getSuggestedMin(
+              history as Data,
+              displayCountervalue ? "countervalue" : "value",
+            )}
             renderTickY={
               discreetMode
                 ? () => ""

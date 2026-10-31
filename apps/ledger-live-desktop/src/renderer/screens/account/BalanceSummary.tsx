@@ -11,6 +11,7 @@ import Box, { Card } from "~/renderer/components/Box";
 import FormattedVal from "~/renderer/components/FormattedVal";
 import AccountBalanceSummaryHeader from "./AccountBalanceSummaryHeader";
 import { Data, Item } from "~/renderer/components/Chart/types";
+import { getSuggestedMin } from "~/renderer/components/Chart/getSuggestedMin";
 import { useLLDCoinFamily } from "~/renderer/families";
 
 import PlaceholderChart from "~/renderer/components/PlaceholderChart";
@@ -143,6 +144,10 @@ export default function AccountBalanceSummary({
             height={200}
             tickXScale={range}
             valueKey={displayCountervalue ? "countervalue" : "value"}
+            suggestedMin={getSuggestedMin(
+              history as Data,
+              displayCountervalue ? "countervalue" : "value",
+            )}
             renderTickY={
               discreetMode
                 ? () => ""
